@@ -310,11 +310,13 @@ func (b *BatchInsert) flusher() {
 		b.cache = list.New()
 		b.mu.Unlock()
 		startTime := time.Now()
-		err := batchInsert(b.db, b.insertSql, l)
-		if err != nil {
-			b.opts.logger.Log("flush error", err)
-		} else {
-			b.opts.logger.Log("flushed", l.Len(), "cost", time.Since(startTime))
+		if l.Len() > 0 {
+			err := batchInsert(b.db, b.insertSql, l)
+			if err != nil {
+				b.opts.logger.Log("flush error", err)
+			} else {
+				b.opts.logger.Log("flushed", l.Len(), "cost", time.Since(startTime))
+			}
 		}
 		if exited {
 			close(b.kick)
