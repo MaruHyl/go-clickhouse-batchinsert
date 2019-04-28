@@ -318,7 +318,7 @@ func (b *BatchInsert) flusher() {
 		}
 		if exited {
 			close(b.kick)
-			b.opts.logger.Log("flusher stop")
+			b.opts.logger.Log("flusher", "stop")
 			return
 		}
 	}
