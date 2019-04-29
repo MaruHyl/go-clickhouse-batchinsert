@@ -166,7 +166,7 @@ func WithFlushPeriod(flushPeriod time.Duration) Option {
 	}
 }
 
-func getUrl(opts options) string {
+func GetUrl(opts options) string {
 	u := new(url.URL)
 	u.Scheme = "tcp"
 	u.Host = opts.host
@@ -230,7 +230,7 @@ func New(insertSql string, opts ...Option) (*BatchInsert, error) {
 		opt(&options)
 	}
 	//
-	url := getUrl(options)
+	url := GetUrl(options)
 	options.logger.Log("open url", url)
 	//
 	db, err := sql.Open("clickhouse", url)
